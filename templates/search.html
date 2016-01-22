@@ -10,14 +10,11 @@
 <row>
 <div ng-repeat="photo in photos" class="thumbnail text-center col-md-3">
 	<img src={{photo.images.low_resolution.url}}> by @{{photo.user.full_name}}
-	
+	<a ng-click="favoritePhoto(photo)" href="#">favorite</a>
 	<div ng-if="photo.likes.count > 0">
 		{{photo.likes.count}} <span ng-pluralize count = "photo.likes.count"
 			when="{'1' : 'Like','other' : 'Likes'}">
 		</span>
 	</div>
+</div>
 </row>
-
-
-</div>
-</div>

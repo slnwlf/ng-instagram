@@ -34,9 +34,13 @@ app.controller('SearchCtrl', ['$scope', '$http', function ($scope, $http) {
 				// error callback
 			});
 	};
+		$scope.favoritePhoto = function (photo) {
+		console.log(photo);
+	};
 }]);
 
 app.controller('FavoritesCtrl', ['$scope', function ($scope) {
 	// add a test attribute
 	$scope.favoritesCtrlTest = "favorites test string here";
-}])
+}]);
+
