@@ -9,5 +9,16 @@
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 <div ng-repeat="photo in photos">
-	<img src={{photo.images.low_resolution.url}}>
+	<img src={{photo.images.low_resolution.url}}> by @{{photo.user.full_name}}
+
+<div ng-if="photo.likes.count > 0">
+{{photo.likes.count}} <span ng-pluralize count = "photo.likes.count"
+when="{'1' : 'Like','other' : 'Likes'}">
+</span>
+</div>
+</div>
+
+
+
+
 </div>
