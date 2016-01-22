@@ -17,9 +17,23 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
 	});
 }]);
 
-app.controller('SearchCtrl', ['$scope', function ($scope) {
+app.controller('SearchCtrl', ['$scope', '$http', function ($scope, $http) {
 	// add a test attribute here
 	$scope.searchCtrlTest = "search test string here";
+	$scope.searchTag = function () {
+		var tag = $scope.tag;
+		var url = 'https://api.instagram.com/v1/tags/' + tag + '/media/recent?client_id=d8d0d6b44249490bbde6eee4d1968dac&callback=JSON_CALLBACK';
+		console.log($scope.tag);
+
+		$http.jsonp(url)
+			.then(function (response) {
+				$scope.photos = response.data.data;
+				console.log(response.data.data);
+				// success callback
+			}, function (error) {
+				// error callback
+			});
+	};
 }]);
 
 app.controller('FavoritesCtrl', ['$scope', function ($scope) {

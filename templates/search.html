@@ -1,2 +1,13 @@
 <h1>Welcome to the Search Page!</h1>
 <h2>{{searchCtrlTest}}</h2>
+
+<form ng-submit="searchTag()">
+  <fieldset class="form-group">
+    <label for="searchtags">Tag search</label>
+    <input ng-model="tag" type="text" class="form-control" id="searchtags" placeholder="search tags">
+  </fieldset>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+<div ng-repeat="photo in photos">
+	<img src={{photo.images.low_resolution.url}}>
+</div>
