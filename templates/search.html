@@ -1,24 +1,23 @@
 <h1>Welcome to the Search Page!</h1>
 <h2>{{searchCtrlTest}}</h2>
-
 <form ng-submit="searchTag()">
-  <fieldset class="form-group">
-    <label for="searchtags">Tag search</label>
-    <input ng-model="tag" type="text" class="form-control" id="searchtags" placeholder="search tags">
-  </fieldset>
-  <button type="submit" class="btn btn-primary">Submit</button>
+	<fieldset class="form-group">
+		<label for="searchtags">Tag search</label>
+		<input ng-model="tag" type="text" class="form-control" id="searchtags" placeholder="search tags">
+	</fieldset>
+	<button type="submit" class="btn btn-primary">Submit</button>
 </form>
-<div ng-repeat="photo in photos">
+<row>
+<div ng-repeat="photo in photos" class="thumbnail text-center col-md-3">
 	<img src={{photo.images.low_resolution.url}}> by @{{photo.user.full_name}}
+	
+	<div ng-if="photo.likes.count > 0">
+		{{photo.likes.count}} <span ng-pluralize count = "photo.likes.count"
+			when="{'1' : 'Like','other' : 'Likes'}">
+		</span>
+	</div>
+</row>
 
-<div ng-if="photo.likes.count > 0">
-{{photo.likes.count}} <span ng-pluralize count = "photo.likes.count"
-when="{'1' : 'Like','other' : 'Likes'}">
-</span>
+
 </div>
-</div>
-
-
-
-
 </div>
