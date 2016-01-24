@@ -1,5 +1,10 @@
 var app = angular.module('instagramSearchApp', ['ngRoute']);
 
+var parseRequestHeaders = {
+  'X-Parse-Application-Id': 'cVJWwtQDGlEaf3Z6SxbdcYk1316mvocFYIIlsJJg',
+  'X-Parse-REST-API-Key': '5W6v082DKbVCgMraDiyYDBKvzGvTw3nyMEIaJPU0'
+};
+
 app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
 	$routeProvider
 		.when('/', {
@@ -18,7 +23,18 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
 }]);
 
 app.factory('Photo', ['$resource', function ($resource) {
-	return $resource('/api/photos/:id', { id: '@_id' });
+	return $resource('https://api.parse.com/1/classes/Photo/:photoId', { photoId: '@photoId' },
+	{
+		query: {
+			method: 'GET',
+			isArray: false,
+			headers: parseRequestHeaders
+		},
+		save: {
+			method: 'POST',
+			headers: parseRequestHeaders
+		}
+	});
 
 	    // $resource function exposes all five RESTful methods/routes
     // { 'get'   : { method: 'GET'                },
@@ -29,8 +45,10 @@ app.factory('Photo', ['$resource', function ($resource) {
 
 }]);
 
-app.controller('SearchCtrl', ['$scope', '$http', function ($scope, $http) {
+app.controller('SearchCtrl', ['$scope', 'Photo', '$http', function ($scope, Photo, $http) {
 	// add a test attribute here
+	$scope.searchCtrlTest = 'search controller is working';
+
 	$scope.searchTag = function () {
 		var tag = $scope.tag;
 		var url = 'https://api.instagram.com/v1/tags/' + tag + '/media/recent?client_id=d8d0d6b44249490bbde6eee4d1968dac&callback=JSON_CALLBACK';
@@ -45,17 +63,14 @@ app.controller('SearchCtrl', ['$scope', '$http', function ($scope, $http) {
 				// error callback
 			});
 	};
-		$scope.searchTag = function (photo) {
-		photo.favorited = true;
-		console.log(photo);
+		$scope.savePhoto = function (photo) {
+			var photoData = {
+				url: photo.images.low_resolution.url,
+				user: photo.user.username,
+				likes: photo.likes.count
 	};
-	var photoData = {
-		url: photo.images.low_resolution.url,
-		user: photo.user.username,
-		likes: photo.likes.count
-	};
-
 	Photo.save(photoData);
+};
 
 }]);
 
