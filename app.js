@@ -1,8 +1,8 @@
 var app = angular.module('instagramSearchApp', ['ngRoute', 'ngResource']);
 
 var parseRequestHeaders = {
-	'X-Parse-Application-Id': 'cVJWwtQDGlEaf3Z6SxbdcYk1316mvocFYIIlsJJg',
-	'X-Parse-REST-API-Key': '5W6v082DKbVCgMraDiyYDBKvzGvTw3nyMEIaJPU0'
+	'X-Parse-Application-Id': 'lZTmwDtU6CvJdlB8P8cItqhkJfOifBOoA4qXnn1o',
+	'X-Parse-REST-API-Key': 'XoZ3YSUnltOHE5LGFxmaonnvm4Ox3nnYuCBE0ZNk'
 };
 
 app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
