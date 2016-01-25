@@ -8,12 +8,15 @@ var parseRequestHeaders = {
 app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
 	$routeProvider
 		.when('/', {
-			templateUrl: '/templates/search.html',
+			templateUrl: 'templates/search.html',
 			controller: 'SearchCtrl'
 		})
 		.when('/favorites', {
-			templateUrl: '/templates/favorites.html',
+			templateUrl: 'templates/favorites.html',
 			controller: 'FavoritesCtrl'
+		})
+		.otherwise({
+			redirectTo: '/'
 		});
 
 	$locationProvider.html5Mode({
@@ -45,7 +48,9 @@ app.factory('Photo', ['$resource', function ($resource) {
 
 }]);
 
-app.controller('SearchCtrl', ['$scope', 'Photo', '$http', function ($scope, Photo, $http) {
+// Controllers
+
+app.controller('SearchCtrl', ['$scope', '$http', 'Photo', function ($scope, $http, Photo) {
 	// add a test attribute here
 	$scope.searchCtrlTest = 'search controller is working';
 

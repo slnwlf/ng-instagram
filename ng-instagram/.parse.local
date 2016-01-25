@@ -1,0 +1,10 @@
+{
+  "applications": {
+    "_default": {
+      "link": "ng-photos"
+    },
+    "ng-photos": {
+      "applicationId": "cVJWwtQDGlEaf3Z6SxbdcYk1316mvocFYIIlsJJg"
+    }
+  }
+}
