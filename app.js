@@ -1,4 +1,4 @@
-var app = angular.module('instagramSearchApp', ['ngRoute']);
+var app = angular.module('instagramSearchApp', ['ngRoute', 'ngResource']);
 
 var parseRequestHeaders = {
 	'X-Parse-Application-Id': 'cVJWwtQDGlEaf3Z6SxbdcYk1316mvocFYIIlsJJg',
