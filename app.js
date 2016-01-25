@@ -1,11 +1,11 @@
 var app = angular.module('instagramSearchApp', ['ngRoute']);
 
 var parseRequestHeaders = {
-  'X-Parse-Application-Id': 'cVJWwtQDGlEaf3Z6SxbdcYk1316mvocFYIIlsJJg',
-  'X-Parse-REST-API-Key': '5W6v082DKbVCgMraDiyYDBKvzGvTw3nyMEIaJPU0'
+	'X-Parse-Application-Id': 'cVJWwtQDGlEaf3Z6SxbdcYk1316mvocFYIIlsJJg',
+	'X-Parse-REST-API-Key': '5W6v082DKbVCgMraDiyYDBKvzGvTw3nyMEIaJPU0'
 };
 
-app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
+app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
 	$routeProvider
 		.when('/', {
 			templateUrl: 'templates/search.html',
@@ -25,9 +25,10 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
 	});
 }]);
 
-app.factory('Photo', ['$resource', function ($resource) {
-	return $resource('https://api.parse.com/1/classes/Photo/:photoId', { photoId: '@photoId' },
-	{
+app.factory('Photo', ['$resource', function($resource) {
+	return $resource('https://api.parse.com/1/classes/Photo/:photoId', {
+		photoId: '@photoId'
+	}, {
 		query: {
 			method: 'GET',
 			isArray: false,
@@ -39,48 +40,62 @@ app.factory('Photo', ['$resource', function ($resource) {
 		}
 	});
 
-	    // $resource function exposes all five RESTful methods/routes
-    // { 'get'   : { method: 'GET'                },
-    //   'save'  : { method: 'POST'               },
-    //   'query' : { method: 'GET', isArray: true },
-    //   'remove': { method: 'DELETE'             },
-    //   'delete': { method: 'DELETE'             } };
+	// $resource function exposes all five RESTful methods/routes
+	// { 'get'   : { method: 'GET'                },
+	//   'save'  : { method: 'POST'               },
+	//   'query' : { method: 'GET', isArray: true },
+	//   'remove': { method: 'DELETE'             },
+	//   'delete': { method: 'DELETE'             } };
 
 }]);
 
 // Controllers
 
-app.controller('SearchCtrl', ['$scope', '$http', 'Photo', function ($scope, $http, Photo) {
+app.controller('SearchCtrl', ['$scope', '$http', 'Photo', function($scope, $http, Photo) {
 	// add a test attribute here
 	$scope.searchCtrlTest = 'search controller is working';
 
-	$scope.searchTag = function () {
+	$scope.searchTag = function() {
 		var tag = $scope.tag;
 		var url = 'https://api.instagram.com/v1/tags/' + tag + '/media/recent?client_id=d8d0d6b44249490bbde6eee4d1968dac&callback=JSON_CALLBACK';
 		console.log($scope.tag);
 
 		$http.jsonp(url)
-			.then(function (response) {
+			.then(function(response) {
 				$scope.photos = response.data.data;
 				console.log(response.data.data);
 				// success callback
-			}, function (error) {
+			}, function(error) {
 				// error callback
 			});
 	};
-		$scope.savePhoto = function (photo) {
-			var photoData = {
-				url: photo.images.low_resolution.url,
-				user: photo.user.username,
-				likes: photo.likes.count
+	$scope.savePhoto = function(photo) {
+		var photoData = {
+			url: photo.images.low_resolution.url,
+			user: photo.user.username,
+			likes: photo.likes.count
+		};
+
+		Photo.save(photoData, function(data) {
+			// success callback
+		}, function(error) {
+			// error callback
+
+		});
 	};
-	Photo.save(photoData);
-};
 
 }]);
 
-app.controller('FavoritesCtrl', ['$scope', '$http', 'Photo', function ($scope, $http, Photo) {
-	$scope.favorites = Photo.query();
+app.controller('FavoritesCtrl', ['$scope', '$http', 'Photo', function($scope, $http, Photo) {
+	$scope.favorites = [];
+
+	Photo.query(function(data) {
+		// success callback
+		$scope.favorites = data.results;
+	}, function(error) {
+		// error callback
+
+
+	});
 
 }]);
-
