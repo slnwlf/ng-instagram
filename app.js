@@ -51,7 +51,7 @@ app.factory('Photo', ['$resource', function($resource) {
 
 // Controllers
 
-app.controller('SearchCtrl', ['$scope', '$http', 'Photo', function($scope, $http, Photo) {
+app.controller('SearchCtrl', ['$scope', '$resource', '$http', 'Photo', function($scope, $resource, $http, Photo) {
 	// add a test attribute here
 	$scope.searchCtrlTest = 'search controller is working';
 
