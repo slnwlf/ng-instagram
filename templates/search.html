@@ -1,21 +1,29 @@
-<h1>Welcome to the Search Page!</h1>
-<form ng-submit="searchTag()">
-	<fieldset class="form-group">
-		<label for="searchtags">Tag search</label>
-		<input ng-model="tag" type="text" class="form-control" id="searchtags" placeholder="search tags">
-	</fieldset>
-	<button type="submit" class="btn btn-primary">Submit</button>
+<h3>search #tags</h3>
+<form ng-submit="searchTag()" class="form-inline">
+  <div class="form-group">
+    <input type="text" ng-model="tag" class="form-control" placeholder="type any tag name" autofocus>
+  </div>
+  <input type="submit" value="search" class="btn btn-cta">
 </form>
-<row>
-<div ng-repeat="photo in photos" class="thumbnail text-center col-md-3">
-	<img src={{photo.images.low_resolution.url}}> by @{{photo.user.full_name}}
-	<a ng-click="searchTag(photo)" href="#">favorite</a>
-	<div ng-if="photo.likes.count > 0">
-		{{photo.likes.count}} <span ng-pluralize count = "photo.likes.count"
-			when="{'1' : 'Like','other' : 'Likes'}">
-		</span>
-	</div>
+<hr>
+<div class="row" ng-if="photos.length > 0">
+  <div class="col-md-3 col-sm-4" ng-repeat="photo in photos">
+    <div class="thumbnail">
+      <img ng-src="{{photo.images.standard_resolution.url}}">
+      <br>
+      <p>
+        <span class="glyphicon" ng-class="{'glyphicon-heart': photo.likes.count > 0, 'glyphicon-heart-empty': photo.likes.count === 0}"></span>
+        <ng-pluralize count="{{photo.likes.count}}" when="{'1': '1 like', 'other': '{} likes'}"></ng-pluralize>
+        <span class="pull-right">
+          @{{photo.user.username}}
+        </span>
+      </p>
+      <p>
+        <a href="javascript:void(0)" ng-click="savePhoto(photo)"> 
+          <span class="glyphicon" ng-class="{'glyphicon-star': photo.favorited, 'glyphicon-star-empty': !photo.favorited}"></span>  
+          favorite
+        </a>
+      </p>
+    </div>
+  </div>
 </div>
-</row
-
-<!-- need savePhoto function here somewhere -->

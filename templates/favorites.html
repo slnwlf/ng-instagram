@@ -1,24 +1,17 @@
-<div class="container">
-  <div class="row">
-    <div class="text-center col-md-6 col-md-offset-3">
-      <h1>Favorite Photos</h1>
-      <hr>
-    </div>
-  </div>
-  <div class="row">
-    <div ng-repeat="photo in favorites" class="col-md-3">
-      <div class="thumbnail">
-        <img ng-src="{{photo.url}}" class="img-responsive" alt="photo">
-        <!-- <button type="button" class=""> -->
-          <p><span ng-click="savePhoto(photo)" class="btn btn-default btn-xs glyphicon glyphicon-star" aria-hidden="true"></span>
-        <!-- </button> -->
-        {{photo.user}} <span class="pull-right">
-        <ng-pluralize count="photo.likes"
-                 when="{'0': 'No Likes',
-                     'one': '1 Like',
-                     'other': '{} Likes'}">
-        </ng-pluralize></span></p>
-      </div>
+<h3>favorite photos</h3>
+<hr>
+<div class="row" ng-if="favorites.length > 0">
+  <div class="col-md-3 col-sm-4" ng-repeat="photo in favorites">
+    <div class="thumbnail">
+      <img ng-src="{{photo.url}}">
+      <br>
+      <p>
+        <span class="glyphicon" ng-class="{'glyphicon-heart': photo.likes > 0, 'glyphicon-heart-empty': photo.likes === 0}"></span>
+        <ng-pluralize count="{{photo.likes}}" when="{'1': '1 like', 'other': '{} likes'}"></ng-pluralize>
+        <span class="pull-right">
+          @{{photo.user}}
+        </span>
+      </p>
     </div>
   </div>
 </div>
